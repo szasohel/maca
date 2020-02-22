@@ -1,0 +1,37 @@
+main{
+    width: 100%;
+    height: 100%;
+    background: url('/assets/bc2.jpg') no-repeat fixed center;
+}
+
+section{
+    width: 336px;
+    height: 475px;
+    background: url('/assets/background.jpg');
+}
+
+ul{
+    padding-left: 72px;
+    padding-top: 230px;
+}
+
+li{
+    padding: 2px;
+    padding-left: 10px;
+    width: 180px;
+}
+
+.Waqt{
+    margin-right: 20px;
+    width: 40px;
+}
+
+.header{
+    font-weight: bold;
+}
+
+.time{
+    width: 50px;
+    text-align: center;
+}
+
