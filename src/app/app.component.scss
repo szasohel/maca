@@ -11,9 +11,9 @@ section {
 }
 
 ul {
-  margin-top: 300px;
   width: 290px;
   height: 300px;
+  margin-left: -40px;
 }
 
 li {
@@ -34,4 +34,11 @@ li {
 .time {
   width: 50px;
   text-align: center;
+}
+
+h5 {
+  font-weight: bold;
+}
+h5:first-of-type {
+  margin-top: 200px;
 }

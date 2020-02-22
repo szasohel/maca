@@ -1,6 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <main fxLayout="row" fxLayoutAlign="center center">
-  <section fxLayout="row" fxLayoutAlign="start center">
+  <section fxLayout="column" fxLayoutAlign="center center">
+    <h5>Muslim American Community Association</h5>
+    <h5>Voorhees, NJ</h5>
+    <h5>Date: {{ today() }}</h5>
     <ul fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
       <li class="header" fxLayout="row" fxLayoutAlign="start center">
         <div class="Waqt">Waqt</div>
@@ -10,17 +13,17 @@
       <li fxLayout="row" fxLayoutAlign="start center">
         <div class="Waqt">Fajr</div>
         <div class="time">{{ data.Fajr }}</div>
-        <div class="time">{{ data.Fajr }}</div>
+        <div class="time">06.00</div>
       </li>
       <li fxLayout="row" fxLayoutAlign="start center">
         <div class="Waqt">Dhuhr</div>
         <div class="time">{{ data.Dhuhr }}</div>
-        <div class="time">{{ data.Dhuhr }}</div>
+        <div class="time">12.30</div>
       </li>
       <li fxLayout="row" fxLayoutAlign="start center">
         <div class="Waqt">Asr</div>
         <div class="time">{{ data.Asr }}</div>
-        <div class="time">{{ data.Asr }}</div>
+        <div class="time">3.30</div>
       </li>
       <li fxLayout="row" fxLayoutAlign="start center">
         <div class="Waqt">Maghrib</div>
@@ -30,7 +33,7 @@
       <li fxLayout="row" fxLayoutAlign="start center">
         <div class="Waqt">Isha</div>
         <div class="time">{{ data.Isha }}</div>
-        <div class="time">{{ data.Isha }}</div>
+        <div class="time">08.00</div>
       </li>
     </ul>
   </section>
