@@ -4,41 +4,45 @@ main {
   background: url("/assets/bc2.jpg") no-repeat fixed center;
 }
 
-section {
-  width: 336px;
-  height: 475px;
-  background: url("/assets/background.jpg");
+img {
+  width: 270px;
+  border-radius: 15px;
+  margin-top: 10%;
+  margin-bottom: 30%;
 }
 
-ul {
-  width: 290px;
-  height: 300px;
-  margin-left: -40px;
-}
-
-li {
-  padding: 2px;
-  padding-left: 10px;
-  width: 180px;
+mat-card {
+  width: 75%;
+  height: 45%;
+  background-color: rgba(245, 247, 241, 0.5);
+  color: black;
 }
 
 .Waqt {
-  margin-right: 20px;
-  width: 40px;
-}
-
-.header {
+  width: 80px;
   font-weight: bold;
 }
 
 .time {
-  width: 50px;
-  text-align: center;
+  width: 100px;
+  font-weight: 450;
+  padding: 5px 0 5px 0;
 }
 
 h5 {
+  font-size: 85%;
   font-weight: bold;
 }
-h5:first-of-type {
-  margin-top: 200px;
+
+.header {
+  font-weight: bolder;
+
+  .time {
+    width: 100px;
+    font-weight: bolder;
+  }
+}
+
+h2 {
+  font-size: 30px;
 }

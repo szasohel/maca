@@ -1,40 +1,53 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<main fxLayout="row" fxLayoutAlign="center center">
-  <section fxLayout="column" fxLayoutAlign="center center">
-    <h5>Muslim American Community Association</h5>
-    <h5>Voorhees, NJ</h5>
-    <h5>Date: {{ today() }}</h5>
-    <ul fxLayout="column" fxLayoutAlign="center center" *ngIf="data">
-      <li class="header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="Waqt">Waqt</div>
-        <div class="time">Time</div>
-        <div class="time">Eqamat</div>
-      </li>
-      <li fxLayout="row" fxLayoutAlign="start center">
-        <div class="Waqt">Fajr</div>
-        <div class="time">{{ data.Fajr }}</div>
-        <div class="time">06.00</div>
-      </li>
-      <li fxLayout="row" fxLayoutAlign="start center">
-        <div class="Waqt">Dhuhr</div>
-        <div class="time">{{ data.Dhuhr }}</div>
-        <div class="time">12.30</div>
-      </li>
-      <li fxLayout="row" fxLayoutAlign="start center">
-        <div class="Waqt">Asr</div>
-        <div class="time">{{ data.Asr }}</div>
-        <div class="time">3.30</div>
-      </li>
-      <li fxLayout="row" fxLayoutAlign="start center">
-        <div class="Waqt">Maghrib</div>
-        <div class="time">{{ data.Maghrib }}</div>
-        <div class="time">+5 Min</div>
-      </li>
-      <li fxLayout="row" fxLayoutAlign="start center">
-        <div class="Waqt">Isha</div>
-        <div class="time">{{ data.Isha }}</div>
-        <div class="time">08.00</div>
-      </li>
-    </ul>
-  </section>
-</main>
+<ng-container *ngIf="mobile; else elseTemplate">
+  <main fxLayout="column" fxLayoutAlign="start center" *ngIf="data">
+    <img src="/assets/logo.png" alt="" />
+
+    <mat-card fxLayout="column" fxLayoutAlign="start center">
+      <h5>
+        {{ data.data.date.gregorian.weekday.en }} {{ data.data.date.readable }}
+      </h5>
+      <h5>
+        {{ data.data.date.hijri.day }} {{ data.data.date.hijri.month.en }},
+        {{ data.data.date.hijri.year }}
+      </h5>
+      <ul fxLayout="column" fxLayoutAlign="center center">
+        <li class="header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="Waqt">Waqt</div>
+          <div class="time">Time</div>
+          <div class="time">Eqamat</div>
+        </li>
+        <li fxLayout="row" fxLayoutAlign="start center">
+          <div class="Waqt">Fajr</div>
+          <div class="time">{{ data.data.timings.Fajr | timeformat }}</div>
+          <div class="time">06.00 am</div>
+        </li>
+        <li fxLayout="row" fxLayoutAlign="start center">
+          <div class="Waqt">Dhuhr</div>
+          <div class="time">{{ data.data.timings.Dhuhr | timeformat }}</div>
+          <div class="time">12.30 pm</div>
+        </li>
+        <li fxLayout="row" fxLayoutAlign="start center">
+          <div class="Waqt">Asr</div>
+          <div class="time">{{ data.data.timings.Asr | timeformat }}</div>
+          <div class="time">03.30 pm</div>
+        </li>
+        <li fxLayout="row" fxLayoutAlign="start center">
+          <div class="Waqt">Maghrib</div>
+          <div class="time">{{ data.data.timings.Maghrib | timeformat }}</div>
+          <div class="time">+5 Min</div>
+        </li>
+        <li fxLayout="row" fxLayoutAlign="start center">
+          <div class="Waqt">Isha</div>
+          <div class="time">{{ data.data.timings.Isha | timeformat }}</div>
+          <div class="time">08.00 pm</div>
+        </li>
+      </ul>
+    </mat-card>
+  </main>
+</ng-container>
+<ng-template #elseTemplate>
+  <main fxLayout="column" fxLayoutAlign="center center">
+    <h2>Sorry! This site is only accessible from mobile devices.</h2>
+  </main>
+</ng-template>
