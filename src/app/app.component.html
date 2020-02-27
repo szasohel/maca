@@ -1,6 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <ng-container *ngIf="mobile; else elseTemplate">
   <main fxLayout="column" fxLayoutAlign="start center" *ngIf="data">
+    <audio id="myAudio">
+      <source src="/assets/ting.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
     <img src="/assets/logo.png" alt="" />
 
     <mat-card fxLayout="column" fxLayoutAlign="start center">
@@ -11,6 +15,17 @@
         {{ data.data.date.hijri.day }} {{ data.data.date.hijri.month.en }},
         {{ data.data.date.hijri.year }}
       </h5>
+      <ng-container *ngIf="itsPrayerTime; else count">
+        <h5><span>{{itsPrayerTime}}</span></h5>
+      </ng-container>
+      <ng-template #count>
+        <h5>
+          <span>{{ hours }}</span> Hours <span>{{ minutes }}</span> Minutes <span>{{ seconds }}</span> Seconds till
+          <span>{{nextPrayer}}</span>
+        </h5>
+      </ng-template>
+
+
       <ul fxLayout="column" fxLayoutAlign="center center">
         <li class="header" fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Waqt</div>
