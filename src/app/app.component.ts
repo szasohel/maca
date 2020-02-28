@@ -130,7 +130,7 @@ export class AppComponent implements OnInit {
     const maghrib = this.data.data.timings.Maghrib.replace(':', '');
     const isha = this.data.data.timings.Isha.replace(':', '');
     let countdown = '';
-    if (timeNow < fazr) {
+    if (timeNow < fazr && timeNow > isha) {
       countdown = this.data.data.timings.Fajr + ':00';
       this.nextPrayer = 'Fajr';
     } else if (timeNow > fazr && timeNow < dhuhr) {
