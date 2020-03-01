@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   data;
   date = new Date();
+  Message;
   mobile = false;
   days: number;
   hours: number;
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit {
     const maghrib = this.data.data.timings.Maghrib.replace(':', '');
     const isha = this.data.data.timings.Isha.replace(':', '');
     let countdown = '';
-    if (timeNow < fazr || timeNow > isha) {
+    if (timeNow < fazr) {
       countdown = this.data.data.timings.Fajr + ':00';
       this.nextPrayer = 'Fajr';
     } else if (timeNow > fazr && timeNow < dhuhr) {
@@ -106,6 +107,7 @@ export class AppComponent implements OnInit {
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
+        this.message = 'It's time for' + this.nextPrayer;
       }
     }, 1000);
   }
