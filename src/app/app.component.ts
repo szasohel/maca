@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   data;
   date = new Date();
-  itsPrayerTime;
   mobile = false;
   days: number;
   hours: number;
