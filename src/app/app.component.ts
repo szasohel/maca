@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
-        this.itsPrayerTime = 'It's time for' + this.nextPrayer;
+        this.itsPrayerTime = `It's time for` + this.nextPrayer;
       }
     }, 1000);
   }
