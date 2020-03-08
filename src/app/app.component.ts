@@ -16,7 +16,151 @@ export class AppComponent implements OnInit {
   seconds: number;
   nextPrayer = '';
   itsPrayerTime: string;
-  constructor(private http: HttpClient) { }
+  prayerTimeToday;
+  eqamatTime = [
+    {
+      date: '8 Mar 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Mar 2020',
+      Fajr: '06:15',
+      Dhuhr: '13:30',
+      Asr: '17:00',
+      Isha: '20:45'
+    },
+    {
+      date: '1 Apr 2020',
+      Fajr: '05:45',
+      Dhuhr: '13:30',
+      Asr: '17:00',
+      Isha: '21:00'
+    },
+    {
+      date: '16 Apr 2020',
+      Fajr: '05:30',
+      Dhuhr: '13:30',
+      Asr: '17:00',
+      Isha: '20:15'
+    },
+    {
+      date: '1 May 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 May 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Jun 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Jun 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Jul 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Jul 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Aug 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Aug 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Sep 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Sep 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Oct 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Oct 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Nov 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Nov 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '1 Dec 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    },
+    {
+      date: '16 Dec 2020',
+      Fajr: '06:30',
+      Dhuhr: '13:30',
+      Asr: '16:45',
+      Isha: '20:30'
+    }
+  ];
+
+  constructor(private http: HttpClient) {}
   ngOnInit() {
     if (window.screen.availWidth < 600) {
       this.mobile = true;
@@ -26,13 +170,29 @@ export class AppComponent implements OnInit {
       .get(
         // tslint:disable-next-line: max-line-length
         `https://api.aladhan.com/v1/timings?latitude=39.8008&longitude=-74.9150&method=6&month=2&year=2020&timezonestring=America/New_York&latitudeAdjustmentMethod=3&date_or_timestamp=${this.today()}`
-
       )
       .subscribe((data: any) => {
         this.data = data;
+        this.prayerTimeToday = this.getEqamat()[0];
+        this.prayerTimeToday['Maghrib'] =
+          this.data.data.timings.Maghrib.substring(0, 3) +
+          (+this.data.data.timings.Maghrib.substr(3) + 5);
         this.thtoday(data);
-
       });
+  }
+
+  getEqamat() {
+    return this.eqamatTime.filter((data, i) => {
+      const today = new Date(this.data.data.date.readable).getTime();
+      const prev = new Date(data.date).getTime();
+      const next =
+        i + 1 < this.eqamatTime.length
+          ? new Date(this.eqamatTime[i + 1].date).getTime()
+          : 0;
+      console.log(prev <= today, next);
+
+      return prev <= today && today < next;
+    });
   }
 
   playAudio() {
@@ -53,8 +213,14 @@ export class AppComponent implements OnInit {
   }
 
   thtoday(data) {
-    const formatedDate = this.data.data.date.readable.slice(0, 6) + ', ' + this.data.data.date.readable.slice(7);
-    const timeNow = new Date().toTimeString().slice(0, 5).replace(':', '');
+    const formatedDate =
+      this.data.data.date.readable.slice(0, 6) +
+      ', ' +
+      this.data.data.date.readable.slice(7);
+    const timeNow = new Date()
+      .toTimeString()
+      .slice(0, 5)
+      .replace(':', '');
     const fazr = this.data.data.timings.Fajr.replace(':', '');
     const dhuhr = this.data.data.timings.Dhuhr.replace(':', '');
     const asr = this.data.data.timings.Asr.replace(':', '');
@@ -83,7 +249,6 @@ export class AppComponent implements OnInit {
 
     // Update the count down every 1 second
     const x = setInterval(() => {
-
       // Get today's date and time
       const now = new Date().getTime();
 
@@ -93,7 +258,9 @@ export class AppComponent implements OnInit {
 
       // Time calculations for days, hours, minutes and seconds
       this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
       console.log(timeNow);

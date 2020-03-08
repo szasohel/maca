@@ -35,27 +35,27 @@
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Fajr</div>
           <div class="time">{{ data.data.timings.Fajr | timeformat }}</div>
-          <div class="time">06.00 am</div>
+          <div class="time">{{ prayerTimeToday.Fajr | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Dhuhr</div>
           <div class="time">{{ data.data.timings.Dhuhr | timeformat }}</div>
-          <div class="time">12.30 pm</div>
+          <div class="time">{{ prayerTimeToday.Dhuhr | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Asr</div>
           <div class="time">{{ data.data.timings.Asr | timeformat }}</div>
-          <div class="time">03.30 pm</div>
+          <div class="time">{{ prayerTimeToday.Asr | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Maghrib</div>
           <div class="time">{{ data.data.timings.Maghrib | timeformat }}</div>
-          <div class="time">+5 Min</div>
+          <div class="time">{{ prayerTimeToday.Maghrib | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Isha</div>
           <div class="time">{{ data.data.timings.Isha | timeformat }}</div>
-          <div class="time">08.00 pm</div>
+          <div class="time">{{ prayerTimeToday.Isha | timeformat }}</div>
         </li>
       </ul>
     </mat-card>

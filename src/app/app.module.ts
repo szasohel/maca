@@ -8,6 +8,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { TimeformatPipe } from './pipes/timeformat.pipe';
 import { MatCardModule } from '@angular/material/card';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, TimeformatPipe],
@@ -17,7 +19,8 @@ import { MatCardModule } from '@angular/material/card';
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
