@@ -174,7 +174,7 @@ export class AppComponent implements OnInit {
       .subscribe((data: any) => {
         this.data = data;
         this.prayerTimeToday = this.getEqamat()[0];
-        this.prayerTimeToday['Maghrib'] =
+        this.prayerTimeToday.Maghrib =
           this.data.data.timings.Maghrib.substring(0, 3) +
           (+this.data.data.timings.Maghrib.substr(3) + 5);
         this.thtoday(data);
@@ -230,22 +230,31 @@ export class AppComponent implements OnInit {
     if (timeNow < fazr) {
       countdown = this.data.data.timings.Fajr + ':00';
       this.nextPrayer = 'Fajr';
+      localStorage.setItem('nextPrayer', this.nextPrayer);
     } else if (timeNow > fazr && timeNow < dhuhr) {
       countdown = this.data.data.timings.Dhuhr + ':00';
       this.nextPrayer = 'Dhuhr';
+      localStorage.setItem('nextPrayer', this.nextPrayer);
     } else if (timeNow > dhuhr && timeNow < asr) {
       countdown = this.data.data.timings.Asr + ':00';
       this.nextPrayer = 'Asr';
+      localStorage.setItem('nextPrayer', this.nextPrayer);
     } else if (timeNow > asr && timeNow < maghrib) {
       countdown = this.data.data.timings.Maghrib + ':00';
       this.nextPrayer = 'Maghrib';
+      localStorage.setItem('nextPrayer', this.nextPrayer);
     } else if (timeNow > maghrib && timeNow < isha) {
       countdown = this.data.data.timings.Isha + ':00';
       this.nextPrayer = 'Isha';
+      localStorage.setItem('nextPrayer', this.nextPrayer);
+    } else if (timeNow > isha){
+      this.nextPrayer = 'Isha'
+      localStorage.setItem('nextPrayer', this.nextPrayer);
     }
 
+    this.nextPrayer = localStorage.getItem('nextPrayer');
+
     const countDownDate = new Date(`${formatedDate} ${countdown}`).getTime();
-    console.log(`${formatedDate} ${countdown}`);
 
     // Update the count down every 1 second
     const x = setInterval(() => {
@@ -254,7 +263,6 @@ export class AppComponent implements OnInit {
 
       // Find the distance between now and the count down date
       const distance = countDownDate - now;
-      console.log(distance);
 
       // Time calculations for days, hours, minutes and seconds
       this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -263,17 +271,18 @@ export class AppComponent implements OnInit {
       );
       this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      console.log(timeNow);
 
       // If the count down is over, write some text
       if (distance <= 0) {
+        if (timeNow <= isha){
         this.playAudio();
+        }
         clearInterval(x);
         this.days = 0;
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
-        this.itsPrayerTime = `It's time for` + this.nextPrayer;
+        this.itsPrayerTime = `It's time for ` + this.nextPrayer;
       }
     }, 1000);
   }
