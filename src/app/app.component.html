@@ -7,19 +7,19 @@
     </audio>
     <img src="/assets/logo.png" alt="" />
 
-    <mat-card fxLayout="column" fxLayoutAlign="start center">
+    <mat-card fxLayout="column" fxLayoutAlign="start center" [ngClass]="{'tomorrow': dateSet===tomorrow()}">
       <h5>
-        {{ data.data.date.gregorian.weekday.en }} {{ data.data.date.readable }}
+        {{ data.date.gregorian.weekday.en }} {{ data.date.readable }}
       </h5>
       <h5>
-        {{ data.data.date.hijri.day }} {{ data.data.date.hijri.month.en }},
-        {{ data.data.date.hijri.year }}
+        {{ data.date.hijri.day }} {{ data.date.hijri.month.en }},
+        {{ data.date.hijri.year }}
       </h5>
       <ng-container *ngIf="itsPrayerTime; else count">
         <h5><span>{{itsPrayerTime}}</span></h5>
       </ng-container>
       <ng-template #count>
-        <h5>
+        <h5 *ngIf="dateSet!=tomorrow()">
           <span>{{ hours }}</span> Hours <span>{{ minutes }}</span> Minutes <span>{{ seconds }}</span> Seconds till
           <span>{{nextPrayer}}</span>
         </h5>
@@ -34,31 +34,39 @@
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Fajr</div>
-          <div class="time">{{ data.data.timings.Fajr | timeformat }}</div>
+          <div class="time">{{ data.timings.Fajr | timeformat }}</div>
           <div class="time">{{ prayerTimeToday.Fajr | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Dhuhr</div>
-          <div class="time">{{ data.data.timings.Dhuhr | timeformat }}</div>
+          <div class="time">{{ data.timings.Dhuhr | timeformat }}</div>
           <div class="time">{{ prayerTimeToday.Dhuhr | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Asr</div>
-          <div class="time">{{ data.data.timings.Asr | timeformat }}</div>
+          <div class="time">{{ data.timings.Asr | timeformat }}</div>
           <div class="time">{{ prayerTimeToday.Asr | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Maghrib</div>
-          <div class="time">{{ data.data.timings.Maghrib | timeformat }}</div>
+          <div class="time">{{ data.timings.Maghrib | timeformat }}</div>
           <div class="time">{{ prayerTimeToday.Maghrib | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Isha</div>
-          <div class="time">{{ data.data.timings.Isha | timeformat }}</div>
+          <div class="time">{{ data.timings.Isha | timeformat }}</div>
           <div class="time">{{ prayerTimeToday.Isha | timeformat }}</div>
         </li>
       </ul>
     </mat-card>
+    <button (click)="onClick()" mat-stroked-button color="accent">
+      <i class="material-icons" *ngIf="dateSet!=tomorrow()">
+        skip_next
+      </i>
+      <i class="material-icons" *ngIf="!(dateSet!=tomorrow())">
+        skip_previous
+      </i>
+    </button>
   </main>
 </ng-container>
 <ng-template #elseTemplate>
