@@ -200,9 +200,13 @@ export class AppComponent implements OnInit {
   setData(day: string, data: any[]) {
 
     this.data = data.filter((dayData) => {
+      console.log(dayData.date.gregorian.date, day);
 
       return dayData.date.gregorian.date === day;
     })[0];
+
+    console.log(this.data);
+
   }
 
   getEqamat() {
