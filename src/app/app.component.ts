@@ -1,12 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { trigger, keyframes, animate, transition } from '@angular/animations';
+import * as kf from './keyframes';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('cardAnimator', [
+      transition('* => wobble', animate(1000, keyframes(kf.wobble))),
+      transition('* => swing', animate(1000, keyframes(kf.swing))),
+      transition('* => jello', animate(1000, keyframes(kf.jello))),
+      transition('* => zoomOutRight', animate(1000, keyframes(kf.zoomOutRight))),
+      transition('* => slideOutLeft', animate(1000, keyframes(kf.slideOutLeft))),
+      transition('* => rotateOutUpRight', animate(1000, keyframes(kf.rotateOutUpRight))),
+      transition('* => flipOutY', animate(1000, keyframes(kf.flipOutY))),
+    ])
+  ]
 })
 export class AppComponent implements OnInit {
+
+  constructor(private http: HttpClient) { }
   data;
   dateToday = new Date();
   dateTomorrow: Date;
@@ -163,18 +178,13 @@ export class AppComponent implements OnInit {
   apiData: any;
   dateSet: string | (() => string);
 
-  constructor(private http: HttpClient) { }
+  animationState: string;
   ngOnInit() {
     if (window.screen.availWidth < 600) {
       this.mobile = true;
     }
     this.getData();
 
-  }
-
-  onClick() {
-    this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
-    this.setData(this.dateSet, this.apiData.data);
   }
 
   getData() {
@@ -191,7 +201,6 @@ export class AppComponent implements OnInit {
         this.prayerTimeToday.Maghrib =
           this.data.timings.Maghrib.substring(0, 3) +
           (+this.data.timings.Maghrib.substr(3, 2) + 5);
-        console.log(this.data.timings.Maghrib.substr(3, 2) + 5);
 
         this.thtoday(data);
       });
@@ -200,12 +209,9 @@ export class AppComponent implements OnInit {
   setData(day: string, data: any[]) {
 
     this.data = data.filter((dayData) => {
-      console.log(dayData.date.gregorian.date, day);
 
       return dayData.date.gregorian.date === day;
     })[0];
-
-    console.log(this.data);
 
   }
 
@@ -324,5 +330,21 @@ export class AppComponent implements OnInit {
         this.itsPrayerTime = `It's time for ` + this.nextPrayer;
       }
     }, 1000);
+  }
+
+  startAnimation(state) {
+    setTimeout(() => {
+      this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
+      this.setData(this.dateSet, this.apiData.data);
+    }, 700);
+
+    if (!this.animationState) {
+      this.animationState = state;
+    }
+
+  }
+
+  resetAnimationState() {
+    this.animationState = '';
   }
 }

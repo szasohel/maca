@@ -7,7 +7,9 @@
     </audio>
     <img src="/assets/logo.png" alt="" />
 
-    <mat-card fxLayout="column" fxLayoutAlign="start center" [ngClass]="{'tomorrow': dateSet===tomorrow()}">
+    <mat-card fxLayout="column" fxLayoutAlign="start center" [@cardAnimator]="animationState"
+      (@cardAnimator.done)="resetAnimationState()" (swipeleft)="startAnimation('slideOutLeft')"
+      (swipeup)="startAnimation('rotateOutUpRight')">
       <h5>
         {{ data.date.gregorian.weekday.en }} {{ data.date.readable }}
       </h5>
@@ -59,14 +61,6 @@
         </li>
       </ul>
     </mat-card>
-    <button (click)="onClick()" mat-stroked-button color="accent">
-      <i class="material-icons" *ngIf="dateSet!=tomorrow()">
-        skip_next
-      </i>
-      <i class="material-icons" *ngIf="!(dateSet!=tomorrow())">
-        skip_previous
-      </i>
-    </button>
   </main>
 </ng-container>
 <ng-template #elseTemplate>

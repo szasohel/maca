@@ -11,6 +11,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = {
+    // override hammerjs default configuration
+    swipe: { direction: Hammer.DIRECTION_ALL }
+  } as any;
+}
 
 @NgModule({
   declarations: [AppComponent, TimeformatPipe],
@@ -21,10 +30,14 @@ import { environment } from '../environments/environment';
     FlexLayoutModule,
     HttpClientModule,
     MatCardModule,
+    HammerModule,
     MatButtonModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [{
+    provide: HAMMER_GESTURE_CONFIG,
+    useClass: MyHammerConfig
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
