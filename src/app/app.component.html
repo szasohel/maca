@@ -9,7 +9,7 @@
 
     <mat-card fxLayout="column" fxLayoutAlign="start center" [@cardAnimator]="animationState"
       (@cardAnimator.done)="resetAnimationState()" (swipeleft)="startAnimation('slideOutLeft')"
-      (swipeup)="startAnimation('rotateOutUpRight')">
+      (swipeup)="startAnimation('rotateOutUpRight')" (swiperight)="startAnimation('zoomOutRight')">
       <h5>
         {{ data.date.gregorian.weekday.en }} {{ data.date.readable }}
       </h5>

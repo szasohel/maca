@@ -176,7 +176,7 @@ export class AppComponent implements OnInit {
     }
   ];
   apiData: any;
-  dateSet: string | (() => string);
+  dateSet = this.today();
 
   animationState: string;
   ngOnInit() {
@@ -333,15 +333,20 @@ export class AppComponent implements OnInit {
   }
 
   startAnimation(state) {
-    setTimeout(() => {
-      this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
-      this.setData(this.dateSet, this.apiData.data);
-    }, 700);
+    if (!this.animationState && this.dateSet === this.today() && state === 'slideOutLeft') {
 
-    if (!this.animationState) {
+      setTimeout(() => {
+        this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
+        this.setData(this.dateSet, this.apiData.data);
+      }, 700);
+      this.animationState = state;
+    } else if (!this.animationState && this.dateSet === this.tomorrow() && state === 'zoomOutRight') {
+      setTimeout(() => {
+        this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
+        this.setData(this.dateSet, this.apiData.data);
+      }, 700);
       this.animationState = state;
     }
-
   }
 
   resetAnimationState() {
