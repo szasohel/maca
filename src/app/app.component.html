@@ -6,7 +6,6 @@
       Your browser does not support the audio element.
     </audio>
     <img src="/assets/logo.png" alt="" />
-
     <mat-card fxLayout="column" fxLayoutAlign="start center" [@cardAnimator]="animationState"
       (@cardAnimator.done)="resetAnimationState()" (swipeleft)="startAnimation('slideOutLeft')"
       (swipeup)="startAnimation('rotateOutUpRight')" (swiperight)="startAnimation('zoomOutRight')">
@@ -61,6 +60,10 @@
         </li>
       </ul>
     </mat-card>
+    <video width="100" height="100" autoplay loop hidden>
+      <source src="/assets/vid.mov" type="video/mp4" />
+    </video>
+
   </main>
 </ng-container>
 <ng-template #elseTemplate>
