@@ -56,13 +56,6 @@ export class AppComponent implements OnInit {
       .subscribe((data: any) => {
         this.apiData = data;
         this.setData(this.today(), data.data);
-
-        this.prayerTimeToday = this.getEqamat()[0];
-        this.prayerTimeToday.Maghrib =
-          this.data.timings.Maghrib.substring(0, 3) +
-          (+this.data.timings.Maghrib.substr(3, 2) + 5);
-
-        this.thtoday(data);
       });
   }
 
@@ -72,6 +65,13 @@ export class AppComponent implements OnInit {
 
       return dayData.date.gregorian.date === day;
     })[0];
+
+    this.prayerTimeToday = this.getEqamat()[0];
+    this.prayerTimeToday.Maghrib =
+      this.data.timings.Maghrib.substring(0, 3) +
+      (+this.data.timings.Maghrib.substr(3, 2) + 5);
+
+    this.thtoday(data);
 
   }
 
