@@ -64,3 +64,7 @@ button{
   border-radius: 5px;
   color: rgb(44, 139, 216);
 }
+
+video::-internal-media-controls-overlay-cast-button {
+  display: none;
+}
