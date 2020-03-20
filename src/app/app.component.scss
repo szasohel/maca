@@ -68,3 +68,8 @@ button{
 video::-internal-media-controls-overlay-cast-button {
   display: none;
 }
+
+video{
+  position: fixed;
+  bottom: 0;
+}
