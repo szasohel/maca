@@ -21,6 +21,8 @@ import * as eqamatTime from './eqamatTime';
   ]
 })
 export class AppComponent implements OnInit {
+  monthToday: string;
+  monthTom: string;
 
   constructor(private http: HttpClient) { }
   data;
@@ -47,24 +49,27 @@ export class AppComponent implements OnInit {
 
   }
 
-  getData() {
+  getData(mon?) {
+    const month = mon ? mon : this.dateToday.getMonth() + 1;
     this.http
       .get(
         // tslint:disable-next-line: max-line-length
-        `https://api.aladhan.com/v1/calendar?latitude=39.8008&longitude=-74.9150&method=6&month=${this.dateToday.getMonth() + 1}&year=2020&timezonestring=America/New_York&latitudeAdjustmentMethod=3`
+        `https://api.aladhan.com/v1/calendar?latitude=39.8008&longitude=-74.9150&method=6&month=${month}&year=2020&timezonestring=America/New_York&latitudeAdjustmentMethod=3`
       )
       .subscribe((data: any) => {
         this.apiData = data;
-        this.setData(this.today(), data.data);
+        this.setData(this.dateSet, data.data);
       });
   }
 
   setData(day: string, data: any[]) {
 
     this.data = data.filter((dayData) => {
+      console.log(dayData.date.gregorian.date, day);
 
       return dayData.date.gregorian.date === day;
     })[0];
+
 
     this.prayerTimeToday = this.getEqamat()[0];
     this.prayerTimeToday.Maghrib =
@@ -102,6 +107,7 @@ export class AppComponent implements OnInit {
         : `${this.dateToday.getDate()}`;
     const m = this.dateToday.getMonth() + 1;
     const month = m < 10 ? `0${m}` : `${m}`;
+    this.monthToday = month;
     return `${date}-${month}-${this.dateToday.getFullYear()}`;
   }
 
@@ -114,6 +120,7 @@ export class AppComponent implements OnInit {
         : `${this.dateTomorrow.getDate()}`;
     const m = this.dateTomorrow.getMonth() + 1;
     const month = m < 10 ? `0${m}` : `${m}`;
+    this.monthTom = month;
     return `${date}-${month}-${this.dateTomorrow.getFullYear()}`;
   }
 
@@ -194,14 +201,20 @@ export class AppComponent implements OnInit {
 
   startAnimation(state) {
     if (!this.animationState && this.dateSet === this.today() && state === 'slideOutLeft') {
-
       setTimeout(() => {
+        if (this.monthToday !== this.monthTom) {
+          this.getData(this.monthTom);
+        }
         this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
         this.setData(this.dateSet, this.apiData.data);
       }, 700);
       this.animationState = state;
     } else if (!this.animationState && this.dateSet === this.tomorrow() && state === 'zoomOutRight') {
+
       setTimeout(() => {
+        if (this.monthToday !== this.monthTom) {
+          this.getData(this.monthToday);
+        }
         this.dateSet = (this.dateSet === this.tomorrow()) ? this.today() : this.tomorrow();
         this.setData(this.dateSet, this.apiData.data);
       }, 700);
