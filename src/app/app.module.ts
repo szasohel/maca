@@ -13,6 +13,19 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyCIzWvibVMl9G6uclbKcmnoSJ4LVf1SfZ8',
+  authDomain: 'scorer-56f42.firebaseapp.com',
+  databaseURL: 'https://scorer-56f42.firebaseio.com',
+  projectId: 'scorer-56f42',
+  storageBucket: 'scorer-56f42.appspot.com',
+  messagingSenderId: '505046071609',
+  appId: '1:505046071609:web:1b8e616ab82f7f1a'
+};
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = {
@@ -32,7 +45,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatCardModule,
     HammerModule,
     MatButtonModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   providers: [{
     provide: HAMMER_GESTURE_CONFIG,

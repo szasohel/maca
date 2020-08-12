@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { trigger, keyframes, animate, transition } from '@angular/animations';
 import * as kf from './keyframes';
 import * as eqamatTime from './eqamatTime';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +24,9 @@ import * as eqamatTime from './eqamatTime';
 export class AppComponent implements OnInit {
   monthToday: string;
   monthTom: string;
+  data$: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private db: AngularFireDatabase) { }
   data;
   dateToday = new Date();
   dateTomorrow: Date;
@@ -45,7 +47,16 @@ export class AppComponent implements OnInit {
     if (window.screen.availWidth < 600) {
       this.mobile = true;
     }
-    this.getData();
+    this.data$ = this.db.list('data').valueChanges();
+
+    this.data$.subscribe(arg => {
+      console.log(arg[0]);
+
+      this.prayerTimeToday = arg[0];
+      this.getData();
+
+    });
+
 
   }
 
@@ -65,13 +76,14 @@ export class AppComponent implements OnInit {
   setData(day: string, data: any[]) {
 
     this.data = data.filter((dayData) => {
-      console.log(dayData.date.gregorian.date, day);
 
       return dayData.date.gregorian.date === day;
     })[0];
 
+    console.log(this.getEqamat()[0]);
 
-    this.prayerTimeToday = this.getEqamat()[0];
+
+    // this.prayerTimeToday = this.getEqamat()[0];
     this.prayerTimeToday.Maghrib =
       this.data.timings.Maghrib.substring(0, 3) +
       (+this.data.timings.Maghrib.substr(3, 2) + 5);
