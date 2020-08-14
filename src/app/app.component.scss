@@ -13,6 +13,24 @@ img {
   margin-bottom: 30%;
 }
 
+.form{
+  margin-bottom: 20px;
+  width: 80%;
+  height: 40px;
+
+  select{
+    height: 100%;
+  }
+
+  
+
+  input{
+    height:99%;
+    margin-right: 0px ;
+  }
+}
+
+
 mat-card {
   width: 80%;
   height: fit-content;

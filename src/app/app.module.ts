@@ -16,6 +16,7 @@ import { HammerGestureConfig, HAMMER_GESTURE_CONFIG, HammerModule } from '@angul
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCIzWvibVMl9G6uclbKcmnoSJ4LVf1SfZ8',
@@ -39,6 +40,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgxMaterialTimepickerModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
@@ -48,7 +50,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    MatButtonModule
   ],
   providers: [{
     provide: HAMMER_GESTURE_CONFIG,

@@ -25,6 +25,9 @@ export class AppComponent implements OnInit {
   monthToday: string;
   monthTom: string;
   data$: any;
+  maghrib: any;
+  count = 0;
+  showEdit: boolean;
 
   constructor(private http: HttpClient, private db: AngularFireDatabase) { }
   data;
@@ -41,6 +44,9 @@ export class AppComponent implements OnInit {
   eqamatTime = eqamatTime.times;
   apiData: any;
   dateSet = this.today();
+
+  type;
+  time;
 
   animationState: string;
   ngOnInit() {
@@ -80,16 +86,40 @@ export class AppComponent implements OnInit {
       return dayData.date.gregorian.date === day;
     })[0];
 
-    console.log(this.getEqamat()[0]);
 
 
     // this.prayerTimeToday = this.getEqamat()[0];
-    this.prayerTimeToday.Maghrib =
-      this.data.timings.Maghrib.substring(0, 3) +
-      (+this.data.timings.Maghrib.substr(3, 2) + 5);
 
+    this.setMagribTime();
     this.thtoday(data);
 
+  }
+
+  startEdit() {
+    console.log(this.count);
+
+    if (this.count <= 3) {
+      this.count++;
+    }
+    if (this.count === 3) {
+      this.showEdit = !this.showEdit;
+      this.count = 0;
+
+    }
+  }
+
+  setMagribTime() {
+    this.maghrib =
+      this.data.timings.Maghrib.substring(0, 3) +
+      (+this.data.timings.Maghrib.substr(3, 2) + 5);
+  }
+
+  onSave(type, time) {
+    console.log(type, time.length);
+    const body = {};
+    time = time.length === 7 ? '0' + time : time;
+    body[type] = time;
+    this.db.list('data').update('prayer', body);
   }
 
   getEqamat() {

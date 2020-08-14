@@ -5,7 +5,20 @@
       <source src="/assets/ting.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
-    <img src="/assets/logo.png" alt="" />
+    <img (click)="startEdit()" src="/assets/logo.png" alt="" />
+    <div *ngIf="showEdit" class="form" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5%">
+      <select name="prayer" id="prayer" fxFlex="40%" #ctrl2>
+        <option value="Fajr">Fajr</option>
+        <option value="Dhuhr">Dhuhr</option>
+        <option value="Asr">Asr</option>
+        <option value="Isha">Isha</option>
+      </select>
+      <input [ngxTimepicker]="picker" placeholder="Select Time" fxFlex="30%" #ctrl1>
+      <ngx-material-timepicker #picker></ngx-material-timepicker>
+      <button mat-raised-button color="primary" fxFlex="20%" (click)="onSave(ctrl2.value,ctrl1.value)">SAVE</button>
+    </div>
+
+
     <mat-card fxLayout="column" fxLayoutAlign="start center" [@cardAnimator]="animationState"
       (@cardAnimator.done)="resetAnimationState()" (swipeleft)="startAnimation('slideOutLeft')"
       (swipeup)="startAnimation('rotateOutUpRight')" (swiperight)="startAnimation('zoomOutRight')">
@@ -36,27 +49,27 @@
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Fajr</div>
           <div class="time">{{ data.timings.Fajr | timeformat }}</div>
-          <div class="time">{{ prayerTimeToday.Fajr | timeformat }}</div>
+          <div class="time">{{ prayerTimeToday.Fajr }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Dhuhr</div>
           <div class="time">{{ data.timings.Dhuhr | timeformat }}</div>
-          <div class="time">{{ prayerTimeToday.Dhuhr | timeformat }}</div>
+          <div class="time">{{ prayerTimeToday.Dhuhr }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Asr</div>
           <div class="time">{{ data.timings.Asr | timeformat }}</div>
-          <div class="time">{{ prayerTimeToday.Asr | timeformat }}</div>
+          <div class="time">{{ prayerTimeToday.Asr }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Maghrib</div>
           <div class="time">{{ data.timings.Maghrib | timeformat }}</div>
-          <div class="time">{{ prayerTimeToday.Maghrib | timeformat }}</div>
+          <div class="time">{{ maghrib | timeformat }}</div>
         </li>
         <li fxLayout="row" fxLayoutAlign="start center">
           <div class="Waqt">Isha</div>
           <div class="time">{{ data.timings.Isha | timeformat }}</div>
-          <div class="time">{{ prayerTimeToday.Isha | timeformat }}</div>
+          <div class="time">{{ prayerTimeToday.Isha }}</div>
         </li>
       </ul>
     </mat-card>
