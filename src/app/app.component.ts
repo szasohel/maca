@@ -109,9 +109,13 @@ export class AppComponent implements OnInit {
   }
 
   setMagribTime() {
-    this.maghrib =
-      this.data.timings.Maghrib.substring(0, 3) +
-      (+this.data.timings.Maghrib.substr(3, 2) + 5);
+
+    let min = +this.data.timings.Maghrib.substr(3, 2) + 5;
+    const hrs = min > 59 ? +this.data.timings.Maghrib.substring(0, 2) + 1 : this.data.timings.Maghrib.substring(0, 2);
+    min = min > 59 ? 0 : min;
+    console.log(min, hrs);
+
+    this.maghrib = hrs + ':' + min;
   }
 
   onSave(type, time) {
